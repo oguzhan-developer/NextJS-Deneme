@@ -25,6 +25,10 @@ Bunun dışında paralel bir şekilde fetch yapmak istiyorsak, Promise.all kulla
 Tüm istekleri tek seferde gönderdiğimiz için websitemiz daha hızlı açılır.
 Özetle eğer ardışık bir işleme ihtiyaç duymuyorsak, Promise.all kullanımı tavsiye edilir.
 
-`loading.tsx` dosyası `/app/dashboard` içerisinde olduğu için `/app/dashboard` içerisindeki `/invoices/page.tsx` ve `/customers/page.tsx` dosyalarında da loading skeletonu etkili olur ancak biz skeletonu dashboard'daki tasarıma göre yaptığımız için, yanlış bir tasarım oluşur(bug). Bunu engellemek için gruplama kullanıyoruz. Parantezler ile grup oluşturulur.
+`loading.tsx` dosyası `/app/dashboard` içerisinde olduğu için `/app/dashboard` içerisindeki `/invoices/page.tsx` ve `/customers/page.tsx` dosyalarında da loading skeletonu etkili olur ancak biz skeletonu dashboard'daki tasarıma göre yaptığımız için, yanlış bir tasarım oluşur(bug). Bunu engellemek için gruplama kullanıyoruz. Parantezler ile grup oluşturulur. Gruplamalar dosya yolunu ve URL'sini etkilemez.
 
 ![File Structure](https://github.com/oguzhan-developer/NextJS-Deneme/blob/5b7d3662ef0892af556bfe8a7b9aa3a84fa86575/structure.png)
+
+Suspense kullanacaksak, suspense edilecek component'in fetch işlemlerini page.tsx den componentin kendi sayfasına taşırız (öncesinde component sadece tasarımı içeriyordu) ve page.tsx sayfasında sadece Suspense ile component'i çağırırız.  
+
+![suspense](https://github.com/oguzhan-developer/NextJS-Deneme/blob/3feb447afda46e310cac8ac9f0ab4670dc542813/suspense.png)
