@@ -48,3 +48,7 @@ Ardından component'te query 'e göre fetch işlemi gerçekleştirilir.
 ![Component kodu](https://github.com/oguzhan-developer/NextJS-Deneme/blob/3792d3d4a691182d27ea7a56082cae991234c757/kod.png)
 
 Genel bir kural olarak, parametreleri client'dan okumak istiyorsanız  `useSearchParams()` hook'unu kullanın.
+
+Bu senaryoda searchbar'daki her tuş vuruşunda veri tabanına istek atacaktır. Örneğin *anahtar* araması için 7 kez veri tabanına istek atılacaktır, bunu engellemek için **debouncing** kullanılır.
+Özetle, timer oluşturulur, her tuş vuruşunda timer yeniden başlar, timer bitene kadar bir tuş vuruşu olmazsa fetch gerçekleşir.
+*use-debounce kütüphanesi*
