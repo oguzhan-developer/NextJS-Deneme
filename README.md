@@ -32,3 +32,19 @@ Tüm istekleri tek seferde gönderdiğimiz için websitemiz daha hızlı açıl�
 Suspense kullanacaksak, suspense edilecek component'in fetch işlemlerini page.tsx den componentin kendi sayfasına taşırız (öncesinde component sadece tasarımı içeriyordu) ve page.tsx sayfasında sadece Suspense ile component'i çağırırız.  
 
 ![suspense](https://github.com/oguzhan-developer/NextJS-Deneme/blob/3feb447afda46e310cac8ac9f0ab4670dc542813/suspense.png)
+
+![Static vs Dynamic](https://github.com/oguzhan-developer/NextJS-Deneme/blob/5ad7c52f8b85981b3ca0de4dcc32e6d7476223a2/static%20vs%20dynamic.avif)
+
+Searchparams(query) kullanarak db'den fetch yaptığımız senaryoda
+`Page.tsx` dosyasında props olarak `searchParams` alınır.
+
+    export default async function Page({searchParams})
+
+Daha sonra query component'e children olarak verilir.
+
+    const query = await searchParams.query;
+    <Table query = {query} />
+Ardından component'te query 'e göre fetch işlemi gerçekleştirilir.
+![Component kodu](https://github.com/oguzhan-developer/NextJS-Deneme/blob/3792d3d4a691182d27ea7a56082cae991234c757/kod.png)
+
+Genel bir kural olarak, parametreleri client'dan okumak istiyorsanız  `useSearchParams()` hook'unu kullanın.
