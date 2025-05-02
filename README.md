@@ -52,3 +52,10 @@ Genel bir kural olarak, parametreleri client'dan okumak istiyorsanız  `useSearc
 Bu senaryoda searchbar'daki her tuş vuruşunda veri tabanına istek atacaktır. Örneğin *anahtar* araması için 7 kez veri tabanına istek atılacaktır, bunu engellemek için **debouncing** kullanılır.
 Özetle, timer oluşturulur, her tuş vuruşunda timer yeniden başlar, timer bitene kadar bir tuş vuruşu olmazsa fetch gerçekleşir.
 *use-debounce kütüphanesi*
+
+*/lib/action.ts* dosyası oluşturduk. 
+en üste `'use server';` yazarak server action olduğunu belirttik.
+Daha sonra 
+`export async function createInvoice(formData: FormData)` ile aksiyon oluşturduk.
+`formData.get('eposta')` komutuyla formdaki input değerlerini çekebiliyoruz. Bunları fonksiyonda kullandık.
+Daha sonra `page.jsx` sayfasında form oluşturduk, action olarak bu fonksiyonu verdik. Kullanıcı, formdaki submit tuşuna basınca createInvoice aksiyonumuz tetikleniyor ve form verilerini çekebiliyoruz. 
