@@ -29,5 +29,24 @@ export async function createInvoice(formData: FormData) {
     values (${customerId}, ${amountAsKurus}, ${status}, ${date} )
     `;
     revalidatePath('/dashboard/invoices'); //nextjs özelligi cache veri tuttugu için, tekrar fetchlemesini saglıyoruz.
-    redirect('/dashboard/invoices'); 
+    redirect('/dashboard/invoices');
+}
+
+const UpdateInvoice = FormScheme.omit({ date: true, id: true })
+
+export async function updateInvoice(id: string, formData: FormData) {
+    const { customerId, amount, status } = UpdateInvoice.parse(
+        {
+            customerId: formData.get('customerId'),
+            amount: formData.get('amount'),
+            status: formData.get('status'),
+        }
+    )
+    const amountAsKurus = amount * 100;
+    await sql`
+    update invoices set customer_id = ${customerId}, amount = ${amountAsKurus}, status = ${status}
+    where id = ${id}
+    `
+    revalidatePath('/dashboard/invoices');
+    redirect('/dashboard/invoices');
 }
