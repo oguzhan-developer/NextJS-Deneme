@@ -24,10 +24,14 @@ export async function createInvoice(formData: FormData) {
     })
     const amountAsKurus = amount * 100; //kurusa ceviriyoruz.
     const date = new Date().toISOString().split("T")[0] // split sebebi cikti : 2025-05-02T18:12:13.622Z
-    await sql`
-    insert into invoices (customer_id, amount, status, date) 
-    values (${customerId}, ${amountAsKurus}, ${status}, ${date} )
-    `;
+    try {
+        await sql`
+        insert into invoices (customer_id, amount, status, date) 
+        values (${customerId}, ${amountAsKurus}, ${status}, ${date} )
+        `;
+    }catch (error) {
+        console.error(error);
+    }
     revalidatePath('/dashboard/invoices'); //nextjs özelligi cache veri tuttugu için, tekrar fetchlemesini saglıyoruz.
     redirect('/dashboard/invoices');
 }
@@ -43,17 +47,25 @@ export async function updateInvoice(id: string, formData: FormData) {
         }
     )
     const amountAsKurus = amount * 100;
-    await sql`
-    update invoices set customer_id = ${customerId}, amount = ${amountAsKurus}, status = ${status}
-    where id = ${id}
-    `
+    try {
+        await sql`
+        update invoices set customer_id = ${customerId}, amount = ${amountAsKurus}, status = ${status}
+        where id = ${id}
+        `
+    } catch (error) {
+        console.error(error);
+    }
     revalidatePath('/dashboard/invoices');
     redirect('/dashboard/invoices');
 }
 
 export async function deleteInvoice(id: string) {
-    await sql`
-    delete from invoices where id = ${id}
-    `
+    try {
+        await sql`
+        delete from invoices where id = ${id}
+        `
+    } catch (error) {
+        console.error(error);
+    }
     revalidatePath('/dashboard/invoices');
 }
