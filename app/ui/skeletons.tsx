@@ -216,3 +216,15 @@ export function InvoicesTableSkeleton() {
     </div>
   );
 }
+
+export function SideNavSkeleton() {
+  return (
+    <div className="flex h-full flex-col px-3 py-4 md:px-2">
+      <div className="animate-pulse space-y-4">
+        <div className="h-8 w-32 rounded-lg bg-gray-200" />
+        <div className="h-8 w-full rounded-lg bg-gray-200" />
+        <div className="h-8 w-full rounded-lg bg-gray-200" />
+      </div>
+    </div>
+  );
+}
