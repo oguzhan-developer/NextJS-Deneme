@@ -4,6 +4,8 @@ import { z } from 'zod'; //data validate kütüphanesi
 import postgres from 'postgres';
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
+import { signIn } from '@/auth';
+import { AuthError } from 'next-auth';
 const sql = postgres(process.env.POSTGRES_URL!, { ssl: 'require' })
 
 const FormScheme = z.object({
@@ -29,7 +31,7 @@ export async function createInvoice(formData: FormData) {
         insert into invoices (customer_id, amount, status, date) 
         values (${customerId}, ${amountAsKurus}, ${status}, ${date} )
         `;
-    }catch (error) {
+    } catch (error) {
         console.error(error);
     }
     revalidatePath('/dashboard/invoices'); //nextjs özelligi cache veri tuttugu için, tekrar fetchlemesini saglıyoruz.
@@ -68,4 +70,20 @@ export async function deleteInvoice(id: string) {
         console.error(error);
     }
     revalidatePath('/dashboard/invoices');
+}
+
+export async function authenticate(prevState: string | undefined, formData: FormData) {
+    try {
+        await signIn('credentials', formData);
+    } catch (error) {
+        if (error instanceof AuthError) {
+            switch (error.name) {
+                case 'CredentialsSignin':
+                    return 'Yanlış e-posta veya şifre';
+                default:
+                    return "Bir hata oluştu";
+            }
+1        }
+        throw error;
+    }
 }
